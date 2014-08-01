@@ -1,4 +1,4 @@
-# Angular Hint Modules[![Build Status](https://travis-ci.org/angular/angular-hint-modules.svg?branch=master)](https://travis-ci.org/angular/angular-hint-modules) [![Code Climate](https://codeclimate.com/github/angular/angular-hint-modules.png)](https://codeclimate.com/github/angular/angular-hint-modules)
+# Angular Hint Modules [![Build Status](https://travis-ci.org/angular/angular-hint-modules.svg?branch=master)](https://travis-ci.org/angular/angular-hint-modules) [![Code Climate](https://codeclimate.com/github/angular/angular-hint-modules.png)](https://codeclimate.com/github/angular/angular-hint-modules)
 
 This hinting module is part of the overall tool [AngularHint](https://github.com/angular/angular-hint)
 that aims to help you spend less time finding silent errors in your code and more time programming.
