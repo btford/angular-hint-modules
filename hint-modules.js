@@ -5,6 +5,7 @@ var storeDependencies = require('./lib/storeDependencies'),
   start = require('./lib/start'),
   storeNgAppAndView = require('./lib/storeNgAppAndView'),
   storeUsedModules = require('./lib/storeUsedModules'),
+  hasNameSpace = require('./lib/hasNameSpace'),
   modData = require('./lib/moduleData');
 
 var doc = Array.prototype.slice.call(document.getElementsByTagName('*')),
@@ -14,9 +15,10 @@ var doc = Array.prototype.slice.call(document.getElementsByTagName('*')),
 storeNgAppAndView(doc);
 
 angular.module = function() {
-  var module = originalAngularModule.apply(this,arguments),
+  var module = originalAngularModule.apply(this, arguments),
     name = module.name;
     modules[name] = module;
+  hasNameSpace(module.name);
   var modToCheck = getModule(module.name, true);
   if(modToCheck && modToCheck.requires.length && module.requires.length) {
     if(!modData.createdMulti[module.name]) {
