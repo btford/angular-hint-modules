@@ -1,9 +1,21 @@
-Angular Hint: Modules[![Build Status](https://travis-ci.org/angular/angular-hint-modules.svg?branch=master)](https://travis-ci.org/angular/angular-hint-modules)[![Code Climate](https://codeclimate.com/github/angular/angular-hint-modules.png)](https://codeclimate.com/github/angular/angular-hint-modules)
-===================
+# Angular Hint Modules[![Build Status](https://travis-ci.org/angular/angular-hint-modules.svg?branch=master)](https://travis-ci.org/angular/angular-hint-modules) [![Code Climate](https://codeclimate.com/github/angular/angular-hint-modules.png)](https://codeclimate.com/github/angular/angular-hint-modules)
 
-Angular Hint Modules lets you spend less time finding silent errors in your code and more time programming. This tool is a subset of many under the [Angular Hint](https://github.com/angular/angular-hint) repository that specializes in identifying errors relating to directives. For instructions on how to incorporate the whole Angular Hint repository into your project, please refer to the link above.
+This hinting module is part of the overall tool [AngularHint](https://github.com/angular/angular-hint)
+that aims to help you spend less time finding silent errors in your code and more time programming.
+Loading this module will provide warnings specific to AngularJS modules.
 
-#### Angular Hint Modules identifies:
+See the [AngularHintModules NPM Module](https://www.npmjs.org/package/angular-hint-modules).
+
+##Usage
+
+Install the [AngularHint NPM module](https://www.npmjs.org/package/angular-hint)
+and use `ng-hint` or `ng-hint-include='modules'` to
+enable AngularHintModules. Further installation information is available on the
+[main AngularHint repository](https://github.com/angular/angular-hint#usage).
+
+##Features
+
+#### AngularHintModules identifies:
   - [Modules missing proper namespaces](#missing-namespace)
   - [Modules created but never loaded](#creating-and-loading-modules)
   - [Multiple modules created with same name](#creating-and-loading-modules)
@@ -19,7 +31,7 @@ angular.module('breadcrumbs').
 ```
 
 #### Creating and Loading Modules
-Hint Modules also notifies you of common problems regarding the creation and loading of modules.
+AngularHintModules also notifies you of common problems regarding the creation and loading of modules.
 
 The following code snippit will be the example for the following sections:
 
@@ -39,6 +51,10 @@ In the example above you would be warned that:
 
 #### ngView with ngRoute
 After routing was seperated from Angular.js, it was required to have `ngRoute` as a dependency for your main module. Since this change, `ngRoute` often got left out, so this module also notifies you if you have routing in your application without requiring `ngRoute`.
+
+##Contributing
+
+Want to improve AngularHintModules or other facets of AngularHint? We'd love to get your help! See the [Contributing Guidelines](https://github.com/angular/angular-hint/blob/master/CONTRIBUTING.md).
 
 ## [License](LICENSE)
 
