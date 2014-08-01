@@ -1,23 +1,22 @@
 'use strict';
 
-var hintLog = angular.hint = require('angular-hint-log');
-var storeDependencies = require('./lib/storeDependencies');
-var getModule = require('./lib/getModule');
-var start = require('./lib/start');
-var storeNgAppAndView = require('./lib/storeNgAppAndView');
-var storeUsedModules = require('./lib/storeUsedModules');
-var modData = require('./lib/moduleData');
+var storeDependencies = require('./lib/storeDependencies'),
+  getModule = require('./lib/getModule'),
+  start = require('./lib/start'),
+  storeNgAppAndView = require('./lib/storeNgAppAndView'),
+  storeUsedModules = require('./lib/storeUsedModules'),
+  modData = require('./lib/moduleData');
 
-var doc = Array.prototype.slice.call(document.getElementsByTagName('*'));
-var originalAngularModule = angular.module;
-var modules = {};
+var doc = Array.prototype.slice.call(document.getElementsByTagName('*')),
+  originalAngularModule = angular.module,
+  modules = {};
 
 storeNgAppAndView(doc);
 
 angular.module = function() {
-  var module = originalAngularModule.apply(this,arguments);
-  var name = module.name;
-  modules[name] = module;
+  var module = originalAngularModule.apply(this,arguments),
+    name = module.name;
+    modules[name] = module;
   var modToCheck = getModule(module.name, true);
   if(modToCheck && modToCheck.requires.length && module.requires.length) {
     if(!modData.createdMulti[module.name]) {
