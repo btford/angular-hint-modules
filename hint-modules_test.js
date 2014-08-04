@@ -19,7 +19,7 @@ describe('hintModules', function() {
   it('should identify modules created and not loaded', function() {
     angular.module('createdAndNotLoaded', []);
     start();
-    expect(hintLog.flush()['Modules']['Error Messages'][0]).toBe('Module "createdAndNotLoaded" was' +
+    expect(hintLog.flush()['Modules']['Warning Messages'][0]).toBe('Module "createdAndNotLoaded" was' +
       ' created but never loaded.');
   });
 
@@ -27,7 +27,8 @@ describe('hintModules', function() {
   it('should identify modules loaded that do not exist', function() {
     angular.module('testModule', ['doesntExist']);
     start();
-    expect(hintLog.flush()['Modules']['Error Messages'][1]).toBe('Module "doesntExist" was loaded but' +
+    var log = hintLog.flush();
+    expect(log['Modules']['Error Messages'][0]).toBe('Module "doesntExist" was loaded but' +
       ' does not exist.');
   });
 
@@ -35,7 +36,7 @@ describe('hintModules', function() {
   it('should identify modules that have been loaded multiple times', function() {
     angular.module('testModule', []);
     start();
-    expect(hintLog.flush()['Modules']['Error Messages'][2]).toBe('Multiple modules with name ' +
+    expect(hintLog.flush()['Modules']['Warning Messages'][1]).toBe('Multiple modules with name ' +
       '"testModule" are being created and they will overwrite each other.');
   });
 
