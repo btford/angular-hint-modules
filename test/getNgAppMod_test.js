@@ -21,7 +21,7 @@ describe('getNgAppMod()', function() {
     var foundNgApp = getNgAppMod(attributes, false);
     getNgAppMod(attributes, foundNgApp);
     var log = hintLog.flush();
-    expect(Object.keys(log['Modules'])).toEqual(['ng-app may only be included once. The module ' +
+    expect(log['Modules']['Error Messages']).toEqual(['ng-app may only be included once. The module ' +
       '"testModule" was not used to bootstrap because ng-app was already included.']);
   });
 });
