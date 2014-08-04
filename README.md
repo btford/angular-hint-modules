@@ -21,19 +21,45 @@ enable AngularHintModules. Further installation information is available on the
   - [Multiple modules created with same name](#creating-and-loading-modules)
   - [Undeclared modules loaded](#creating-and-loading-modules)
   - [Using ngView without ngRoute](#ngview-with-ngroute)
+  - [Multiple uses of ng-app](#ng-app)
 
-#### Missing Namespace
-It is important for modules we create to have their own unique namespace so as to not conflict with existing modules in Angular or external libraries that may be used. As in the example below, if a module with name 'breadcrumb' was created, you would be warned and prompted to use a more appropriate name that adheres to namespace best practices.
+####<a name="missing-namespace"></a> Missing Namespace
+It is important for modules to have their own unique namespace so as to not conflict with existing modules in Angular or external libraries that may be used. Specifically, a module should be named with lowerCamelCase. Moreover, all modules in an application should be prefixed with a consistent prefix, as in the Angular `ng` prefix. For example, a travel application could have
+the prefix `ta` to stand for 'travel application'. This special prefix would ensure that the modules created
+for this application would have different names, and hence namespaces, as compared to other third party components.
+
+For instance, say we create a module `calendar` for this travel application:
+
 ```javascript
-angular.module('breadcrumbs').
+angular.module('calendar').
   directive('myComponent', function() { ... };
 });
 ```
 
-#### Creating and Loading Modules
+Later, we decide to use a third party module that happens to contain a different module called
+`calendar` in addition to the functionality that we would like to use:
+
+```javascript
+angular.module('calendar').
+  directive('thirdPartyComponent', function() { ... };
+});
+```
+These modules would overwrite each other. However, if we name our own modules with our namespace best practice,
+we avoid this issue:
+
+
+```javascript
+angular.module('taCalendar').
+  directive('myComponent', function() { ... };
+});
+```
+AngularHintModules provides a warning if modules are not named with lowerCamelCase.
+
+
+####<a name="creating-and-loading-modules"></a> Creating and Loading Modules
 AngularHintModules also notifies you of common problems regarding the creation and loading of modules.
 
-The following code snippit will be the example for the following sections:
+The following code snippet will be the example for the following sections:
 
 ```Javascript
 angular.module('createdAndLoaded',[]);
@@ -49,8 +75,43 @@ In the example above you would be warned that:
 - The `createdAndLoaded` module name was used twice and the first will be overwritten.
 - The `iDontEvenexist` module was loaded but it was never created.
 
-#### ngView with ngRoute
-After routing was seperated from Angular.js, it was required to have `ngRoute` as a dependency for your main module. Since this change, `ngRoute` often got left out, so this module also notifies you if you have routing in your application without requiring `ngRoute`.
+####<a name="ngview-with-ngroute"></a> ngView with ngRoute
+Routing has been separated from Angular.js into a separate `ngRoute` module. To use routing, `ngRoute` must be
+loaded as a dependency for your main module. This module notifies you if you have routing in your application but
+you have not loaded `ngRoute`.
+
+###<a name="ng-app"></a> Multiple uses of ng-app
+The `ng-app` directive is provided to bootstrap a module as the main module of an Angular application.
+
+```
+<!doctype html>
+<html ng-app='sampleApp' ng-hint>
+  <head>
+    <meta charset="utf-8">
+    <title>Angular Hint Example</title>
+  </head>
+  <body ng-controller="HintController">
+   ...
+</html>
+```
+
+However, this directive can only bootstrap one module as the main module of the application.
+Using the directive multiple times will not bootstrap multiple modules. The following is an error,
+and will produce an AngularHintModules message:
+
+```
+<!doctype html>
+<html ng-app='sampleApp' ng-hint>
+  <head>
+    <meta charset="utf-8">
+    <title>Angular Hint Example</title>
+  </head>
+  <body ng-app='sampleAllHint' ng-controller="HintController">
+    ...
+  </body>
+</html>
+
+```
 
 ##Contributing
 
