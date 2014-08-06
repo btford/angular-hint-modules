@@ -65,3 +65,16 @@ describe('hintModules', function() {
       ' module names is to use lowerCamelCase. Check the name of "Testmodule".');
   });
 });
+
+describe('hintModules integration', function() {
+  it('should not warn about itself or other ngHintModules', function() {
+    angular.module('ngHintModules', []);
+    angular.module('ngHintControllers', []);
+    angular.module('ngHintDirectives', []);
+    angular.module('ngHintDOM', []);
+    angular.module('ngHintEvents', []);
+    angular.module('ngHintInterpolation', []);
+    start();
+    expect(hintLog.flush()['Modules']['Warning Messages'].length).toBe(4);
+  });
+});
