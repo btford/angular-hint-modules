@@ -15,12 +15,15 @@ var doc = Array.prototype.slice.call(document.getElementsByTagName('*')),
 storeNgAppAndView(doc);
 
 angular.module = function() {
-  var module = originalAngularModule.apply(this, arguments),
+  var requiresOriginal = arguments[1],
+    module = originalAngularModule.apply(this, arguments),
     name = module.name;
+  module.requiresOriginal = requiresOriginal;
   modules[name] = module;
   hasNameSpace(module.name);
   var modToCheck = getModule(module.name, true);
-  if(modToCheck && modToCheck.requires.length === module.requires.length) {
+
+  if(modToCheck && modToCheck.requiresOriginal !== module.requiresOriginal) {
     if(!modData.createdMulti[module.name]) {
       modData.createdMulti[module.name] = [getModule(module.name,true)];
     }

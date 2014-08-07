@@ -54,19 +54,18 @@ describe('hintModules', function() {
     angular.module('testModule2', []);
     angular.module('testModule2').controller('controller', [function(){}]);
     start();
-    var results = Object.keys(hintLog.flush()['Modules']);
-    var finResult = results.some(function(res){
-      return res === 'Multiple modules with name "testModule" are being created and they will ' +
-        'overwrite each other.';
-    });
-    expect(finResult).toBe(false);
+    var log = hintLog.flush()['Modules'];
+    var duplicateMessages = log['Warning Messages'];
+    expect(duplicateMessages.indexOf('Multiple modules with name "testModule2" are being ' +
+      'created and they will overwrite each other.')).toBe(-1);
   });
 
 
   it('should warn if modules are not named with lowerCamelCase', function() {
     angular.module('testmodule', []);
     start();
-    expect(hintLog.flush()['Modules']['Suggestion Messages'][0]).toBe('The best practice for' +
+    var log = hintLog.flush();
+    expect(log['Modules']['Suggestion Messages'][0]).toBe('The best practice for' +
       ' module names is to use lowerCamelCase. Check the name of "testmodule".');
 
     angular.module('Testmodule', []);
