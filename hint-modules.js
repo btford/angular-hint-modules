@@ -17,10 +17,10 @@ storeNgAppAndView(doc);
 angular.module = function() {
   var module = originalAngularModule.apply(this, arguments),
     name = module.name;
-    modules[name] = module;
+  modules[name] = module;
   hasNameSpace(module.name);
   var modToCheck = getModule(module.name, true);
-  if(modToCheck && modToCheck.requires.length && module.requires.length) {
+  if(modToCheck && modToCheck.requires.length === module.requires.length) {
     if(!modData.createdMulti[module.name]) {
       modData.createdMulti[module.name] = [getModule(module.name,true)];
     }

@@ -5,14 +5,14 @@ describe('hintModules', function() {
   beforeEach(function() {
     modData.createdModules = {
       'createdAndNotLoaded': {name:'createdAndNotLoaded', requires: []},
-      'testModule': {name:'createdAndNotLoaded', requires: []}
+      'testModule': {name:'testModule', requires: []}
     }
     modData.loadedModules = {
       'doesntExist': 'doesntExist',
       'testModule': 'testModule'
     }
     modData.createdMulti = {
-      'testModule': 'testModule'
+      'testModule': ['testModule']
     }
   });
 
@@ -38,6 +38,15 @@ describe('hintModules', function() {
     start();
     expect(hintLog.flush()['Modules']['Warning Messages'][1]).toBe('Multiple modules with name ' +
       '"testModule" are being created and they will overwrite each other.');
+  });
+
+
+  it('should identify modules that have been loaded twice', function() {
+    angular.module('moduleDuplicate', []);
+    angular.module('moduleDuplicate', []);
+    start();
+    expect(hintLog.flush()['Modules']['Warning Messages'][3]).toBe('Multiple modules with name ' +
+      '"moduleDuplicate" are being created and they will overwrite each other.');
   });
 
 
