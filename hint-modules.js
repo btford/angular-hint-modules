@@ -20,16 +20,16 @@ angular.module = function() {
     name = module.name;
   module.requiresOriginal = requiresOriginal;
   modules[name] = module;
-  hasNameSpace(module.name);
-  var modToCheck = getModule(module.name, true);
+  hasNameSpace(name);
+  var modToCheck = getModule(name, true);
 
   if(modToCheck && modToCheck.requiresOriginal !== module.requiresOriginal) {
-    if(!modData.createdMulti[module.name]) {
-      modData.createdMulti[module.name] = [getModule(module.name,true)];
+    if(!modData.createdMulti[name]) {
+      modData.createdMulti[name] = [getModule(name,true)];
     }
-    modData.createdMulti[module.name].push(module);
+    modData.createdMulti[name].push(module);
   }
-  modData.createdModules[module.name] = module;
+  modData.createdModules[name] = module;
   return module;
 };
 
