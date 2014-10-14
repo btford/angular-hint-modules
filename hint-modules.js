@@ -1,12 +1,12 @@
 'use strict';
 
 var storeDependencies = require('./lib/storeDependencies'),
-  getModule = require('./lib/getModule'),
-  start = require('./lib/start'),
-  storeNgAppAndView = require('./lib/storeNgAppAndView'),
-  storeUsedModules = require('./lib/storeUsedModules'),
-  hasNameSpace = require('./lib/hasNameSpace'),
-  modData = require('./lib/moduleData');
+    getModule = require('./lib/getModule'),
+    start = require('./lib/start'),
+    storeNgAppAndView = require('./lib/storeNgAppAndView'),
+    storeUsedModules = require('./lib/storeUsedModules'),
+    hasNameSpace = require('./lib/hasNameSpace'),
+    modData = require('./lib/moduleData');
 
 var doc = Array.prototype.slice.call(document.getElementsByTagName('*')),
   originalAngularModule = angular.module,
