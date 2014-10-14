@@ -14,10 +14,10 @@ var doc = Array.prototype.slice.call(document.getElementsByTagName('*')),
 
 storeNgAppAndView(doc);
 
-angular.module = function() {
-  var requiresOriginal = arguments[1],
-    module = originalAngularModule.apply(this, arguments),
-    name = module.name;
+angular.module = function(name, requiresOriginal) {
+  var module = originalAngularModule.apply(this, arguments),
+      name = module.name;
+
   module.requiresOriginal = requiresOriginal;
   modules[name] = module;
   hasNameSpace(name);
