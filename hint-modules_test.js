@@ -16,6 +16,10 @@ describe('hintModules', function() {
     }
   });
 
+  afterEach(function() {
+    hintLog.flush();
+  });
+
   it('should identify modules created and not loaded', function() {
     angular.module('createdAndNotLoaded', []);
     start();
@@ -76,13 +80,22 @@ describe('hintModules', function() {
 
 describe('hintModules integration', function() {
   it('should not warn about itself or other ngHintModules', function() {
-    angular.module('ngHintModules', []);
+
+    // what is this i dont even
+    modData.createdModules = {};
+    modData.loadedModules = {};
+    modData.createdMulti = {};
+
     angular.module('ngHintControllers', []);
     angular.module('ngHintDirectives', []);
-    angular.module('ngHintDOM', []);
+    angular.module('ngHintDom', []);
     angular.module('ngHintEvents', []);
     angular.module('ngHintInterpolation', []);
+    angular.module('ngHintScopes', []);
+    angular.module('ng', []);
+    angular.module('ngLocale', []);
+
     start();
-    expect(hintLog.flush()['Modules']['Warning Messages'].length).toBe(4);
+    expect(hintLog.flush()['Modules']).not.toBeDefined();
   });
 });
