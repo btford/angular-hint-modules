@@ -23,7 +23,7 @@ describe('hintModules', function() {
   it('should identify modules created and not loaded', function() {
     angular.module('createdAndNotLoaded', []);
     start();
-    expect(hintLog.flush()['Modules']['Warning Messages'][0]).toBe('Module "createdAndNotLoaded" was' +
+    expect(hintLog.flush().Modules.warning[0]).toBe('Module "createdAndNotLoaded" was' +
       ' created but never loaded.');
   });
 
@@ -32,7 +32,7 @@ describe('hintModules', function() {
     angular.module('testModule', ['doesntExist']);
     start();
     var log = hintLog.flush();
-    expect(log['Modules']['Error Messages'][0]).toBe('Module "doesntExist" was loaded but' +
+    expect(log.Modules.error[0]).toBe('Module "doesntExist" was loaded but' +
       ' does not exist.');
   });
 
@@ -40,7 +40,7 @@ describe('hintModules', function() {
   it('should identify modules that have been loaded multiple times', function() {
     angular.module('testModule', []);
     start();
-    expect(hintLog.flush()['Modules']['Warning Messages'][1]).toBe('Multiple modules with name ' +
+    expect(hintLog.flush().Modules.warning[1]).toBe('Multiple modules with name ' +
       '"testModule" are being created and they will overwrite each other.');
   });
 
@@ -49,7 +49,7 @@ describe('hintModules', function() {
     angular.module('moduleDuplicate', []);
     angular.module('moduleDuplicate', []);
     start();
-    expect(hintLog.flush()['Modules']['Warning Messages'][3]).toBe('Multiple modules with name ' +
+    expect(hintLog.flush().Modules.warning[3]).toBe('Multiple modules with name ' +
       '"moduleDuplicate" are being created and they will overwrite each other.');
   });
 
@@ -58,10 +58,10 @@ describe('hintModules', function() {
     angular.module('testModule2', []);
     angular.module('testModule2').controller('controller', [function(){}]);
     start();
-    var log = hintLog.flush()['Modules'];
-    var duplicateMessages = log['Warning Messages'];
-    expect(duplicateMessages.indexOf('Multiple modules with name "testModule2" are being ' +
-      'created and they will overwrite each other.')).toBe(-1);
+    var log = hintLog.flush().Modules;
+    var duplicateMessages = log.warning;
+    expect(duplicateMessages).not.toContain('Multiple modules with name "testModule2" are being ' +
+      'created and they will overwrite each other.');
   });
 
 
@@ -69,11 +69,11 @@ describe('hintModules', function() {
     angular.module('testmodule', []);
     start();
     var log = hintLog.flush();
-    expect(log['Modules']['Suggestion Messages'][0]).toBe('The best practice for' +
+    expect(log.Modules.suggestion[0]).toBe('The best practice for' +
       ' module names is to use lowerCamelCase. Check the name of "testmodule".');
 
     angular.module('Testmodule', []);
-    expect(hintLog.flush()['Modules']['Suggestion Messages'][0]).toBe('The best practice for' +
+    expect(hintLog.flush().Modules.suggestion[0]).toBe('The best practice for' +
       ' module names is to use lowerCamelCase. Check the name of "Testmodule".');
   });
 });
